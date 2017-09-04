@@ -1,4 +1,4 @@
-# Unit Testing Spark Structured Streaming queries
+# Unit-Testing Spark Structured Streaming queries
 
 This repo gives an example of unit test for [Spark Structured Streaming](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html) queries in Java. [IntelliJ](https://www.jetbrains.com/idea/) is used as IDE, [Maven](http://search.maven.org/) as package manager, and [JUnit](http://junit.org/) as test framework.
 
