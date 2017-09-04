@@ -30,13 +30,13 @@ void testSetupProcessing() {
 
 ## Mocks
 
-So far nothing that noteworthy. The main trick was to mock the inputs and outputs to isolate the query.
+The main trick in this repo was to mock the inputs and outputs to isolate the query.
 
 ### Input stream
 
 Two options work well:
 
-- Using [MemoryStream](https://github.com/apache/spark/blob/master/sql/core/src/main/scala/org/apache/spark/sql/execution/streaming/memory.scala) and defining the data in the code.
+- Using [MemoryStream](https://github.com/apache/spark/blob/master/sql/core/src/main/scala/org/apache/spark/sql/execution/streaming/memory.scala) and defining the data in the code. Specifying a stream schema in `MemoryStream` did not look obvious to me, so I used rows of CSV strings that are parsed into typed columns using a SQL `SELECT` expression.
 
 ```Java
 private static Dataset<Row> createStreamingDataFrame() {
@@ -92,7 +92,7 @@ Dataset<Row> reference = spark.read()
     .csv("data\\input\\reference.csv");
 ```
 
-## Output
+### Output
 
 There [MemorySink](https://github.com/apache/spark/blob/master/sql/core/src/main/scala/org/apache/spark/sql/execution/streaming/memory.scala) is used to collect the output data into an `Output` table that is then queried to obtain a `List<Row>`.
 
@@ -107,3 +107,18 @@ private static List<Row> processData(Dataset<Row> stream) {
 
     return spark.sql("select * from Output").collectAsList();
 }
+```
+
+### Session
+
+The last piece is the Spark session that hosts the data-processing pipeline locally.
+
+```Java
+@BeforeAll
+public static void setUpClass() throws Exception {
+    spark = SparkSession.builder()
+        .appName("SparkStructuredStreamingDemo")
+        .master("local[2]")
+        .getOrCreate();
+}
+```
