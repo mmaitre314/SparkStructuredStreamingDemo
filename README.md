@@ -70,15 +70,15 @@ Two options here too:
 ```Java
 private static Dataset<Row> createStaticDataFrame() {
     return spark.createDataFrame(
-            Arrays.asList(
-                RowFactory.create(1, "Name1"),
-                RowFactory.create(2, "Name2"),
-                RowFactory.create(3, "Name3"),
-                RowFactory.create(4, "Name4")
-            ),
-            new StructType()
-                .add("Id", DataTypes.IntegerType)
-                .add("Name", DataTypes.StringType));
+        Arrays.asList(
+            RowFactory.create(1, "Name1"),
+            RowFactory.create(2, "Name2"),
+            RowFactory.create(3, "Name3"),
+            RowFactory.create(4, "Name4")
+        ),
+        new StructType()
+            .add("Id", DataTypes.IntegerType)
+            .add("Name", DataTypes.StringType));
 }
 ```
 
